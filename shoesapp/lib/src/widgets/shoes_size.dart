@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ShoesSize extends StatelessWidget {
+  final bool fullscreen;
+
+  ShoesSize({required this.fullscreen});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      padding: EdgeInsets.symmetric(
+          horizontal: (fullscreen) ? 5 : 30, vertical: (fullscreen) ? 0 : 5),
       child: Container(
         width: double.infinity,
         height: 350,
@@ -20,7 +25,7 @@ class ShoesSize extends StatelessWidget {
             //Shoes with shadow
             Flexible(child: _ShoesWithShadow()),
             //Size to shoes
-            _ShoeSize(),
+            if (!fullscreen) _ShoeSize(),
             SizedBox(height: 25)
           ],
         ),
