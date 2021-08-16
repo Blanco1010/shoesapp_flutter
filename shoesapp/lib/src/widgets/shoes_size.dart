@@ -12,7 +12,7 @@ class ShoesSize extends StatelessWidget {
           horizontal: (fullscreen) ? 5 : 30, vertical: (fullscreen) ? 0 : 5),
       child: Container(
         width: double.infinity,
-        height: 350,
+        height: 300,
         decoration: BoxDecoration(
           color: Color(0xffF8D468),
           borderRadius: BorderRadius.all(
@@ -38,7 +38,7 @@ class _ShoeSize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [

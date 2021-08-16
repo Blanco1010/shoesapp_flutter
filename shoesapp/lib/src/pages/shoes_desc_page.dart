@@ -8,9 +8,27 @@ class ShoesDescPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            ShoesSize(fullscreen: true),
+            Stack(
+              children: [
+                ShoesSize(fullscreen: true),
+                Positioned(
+                  top: 40,
+                  child: GestureDetector(
+                    onTap: () {
+                      print('object');
+                    },
+                    child: Icon(
+                      Icons.chevron_left,
+                      color: Colors.white,
+                      size: 60,
+                    ),
+                  ),
+                )
+              ],
+            ),
             Expanded(
                 child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
                   ShoesInfo(
@@ -20,12 +38,68 @@ class ShoesDescPage extends StatelessWidget {
                   ),
                   _BuyNow(),
                   _ColorsSelect(),
+                  _ButtonLikeCarSettings(),
                 ],
               ),
             ))
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ButtonLikeCarSettings extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 30),
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _ButtonShadow(icon: Icon(Icons.star, color: Colors.red, size: 25)),
+          _ButtonShadow(
+            icon: Icon(
+              Icons.add_shopping_cart,
+              color: Colors.grey.withOpacity(0.4),
+              size: 25,
+            ),
+          ),
+          _ButtonShadow(
+              icon: Icon(
+            Icons.settings,
+            color: Colors.grey.withOpacity(0.4),
+            size: 25,
+          )),
+        ],
+      ),
+    );
+  }
+}
+
+class _ButtonShadow extends StatelessWidget {
+  final Icon icon;
+
+  const _ButtonShadow({required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: this.icon,
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              spreadRadius: -5,
+              blurRadius: 20,
+              offset: Offset(0, 10),
+            )
+          ]),
     );
   }
 }

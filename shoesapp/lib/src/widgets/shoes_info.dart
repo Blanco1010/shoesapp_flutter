@@ -16,13 +16,13 @@ class ShoesInfo extends StatelessWidget {
           SizedBox(height: 20),
           Text(
             this.title,
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 5),
           Text(
             this.description,
             textAlign: TextAlign.start,
-            style: TextStyle(color: Colors.black54, height: 1.8),
+            style: TextStyle(color: Colors.black54, height: 1),
           ),
         ],
       ),
