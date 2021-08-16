@@ -1,21 +1,30 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoesapp/src/helpers/helpers.dart';
+import 'package:shoesapp/src/models/shoes_model.dart';
 import 'package:shoesapp/src/widgets/custom_widget.dart';
 
 class ShoesDescPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    changeStatusLight();
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             Stack(
               children: [
-                ShoesSize(fullscreen: true),
+                Hero(
+                    tag: 'shoes-1',
+                    child: Material(child: ShoesSize(fullscreen: true))),
                 Positioned(
                   top: 40,
                   child: GestureDetector(
                     onTap: () {
-                      print('object');
+                      changeStatusDark();
+                      Navigator.pop(context);
                     },
                     child: Icon(
                       Icons.chevron_left,
@@ -36,7 +45,7 @@ class ShoesDescPage extends StatelessWidget {
                     description:
                         "The Nike Air Max 720 goes bigger than ever before with Nike's taller Air unit yet, offering more air underfoot for unimaginable, all-day comfort. Has Air Max gone too far? We hope so.",
                   ),
-                  _BuyNow(),
+                  _ButtonBuyNow(),
                   _ColorsSelect(),
                   _ButtonLikeCarSettings(),
                 ],
@@ -115,12 +124,34 @@ class _ColorsSelect extends StatelessWidget {
               child: Stack(
             children: [
               Positioned(
-                  left: 90, child: _ButtonColor(color: Color(0xffC6D642))),
+                left: 90,
+                child: _ButtonColor(
+                  color: Color(0xffC6D642),
+                  time: 4,
+                  assets: 'assets/img/verde.png',
+                ),
+              ),
               Positioned(
-                  left: 60, child: _ButtonColor(color: Color(0xffFFAD29))),
+                left: 60,
+                child: _ButtonColor(
+                  color: Color(0xffFFAD29),
+                  time: 3,
+                  assets: 'assets/img/amarillo.png',
+                ),
+              ),
               Positioned(
-                  left: 30, child: _ButtonColor(color: Color(0xff2099F1))),
-              _ButtonColor(color: Color(0xff364D56)),
+                left: 30,
+                child: _ButtonColor(
+                  color: Color(0xff2099F1),
+                  time: 2,
+                  assets: 'assets/img/azul.png',
+                ),
+              ),
+              _ButtonColor(
+                color: Color(0xff364D56),
+                time: 1,
+                assets: 'assets/img/negro.png',
+              ),
             ],
           )),
           ButtonOrange(
@@ -136,23 +167,39 @@ class _ColorsSelect extends StatelessWidget {
 
 class _ButtonColor extends StatelessWidget {
   final Color color;
+  final int time;
+  final String assets;
 
-  const _ButtonColor({required this.color});
+  const _ButtonColor({
+    required this.color,
+    required this.time,
+    required this.assets,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 45,
-      width: 45,
-      decoration: BoxDecoration(
-        color: this.color,
-        shape: BoxShape.circle,
+    return FadeInLeft(
+      duration: Duration(milliseconds: time * 200),
+      delay: Duration(milliseconds: time * 300),
+      child: GestureDetector(
+        onTap: () {
+          final shoesModel = Provider.of<ShoesModel>(context, listen: false);
+          shoesModel.assetsImage = this.assets;
+        },
+        child: Container(
+          height: 45,
+          width: 45,
+          decoration: BoxDecoration(
+            color: this.color,
+            shape: BoxShape.circle,
+          ),
+        ),
       ),
     );
   }
 }
 
-class _BuyNow extends StatelessWidget {
+class _ButtonBuyNow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -169,7 +216,11 @@ class _BuyNow extends StatelessWidget {
               ),
             ),
             Spacer(),
-            ButtonOrange(text: 'Buy now', height: 35, width: 80),
+            Bounce(
+              from: 10,
+              duration: Duration(seconds: 1),
+              child: ButtonOrange(text: 'Buy now', height: 35, width: 80),
+            ),
           ],
         ),
       ),
